@@ -4,11 +4,14 @@ package components;
  * Created by akrzos on 2016-06-10.
  */
 public class Board {
-    int[][] board = new int[20][20];
+    static int[][]  board = new int[20][20];
     Player player1;
     Player player2;
     Player activePlayer;
 
+    public static int[][] getBoard() {
+        return board;
+    }
 
     //TODO placeholder method
     public void preparePlayers() {
@@ -65,17 +68,81 @@ public class Board {
         }
     }
 
-    public int hasPlayerWon() {
+    public static int hasPlayerWon() {
+        int checkedPlayer;
+        boolean playerWon;
 
         //horizontalWin
-        //check[0-15][0-19]
+        for (int x = 0; x <= 15; x++) {
+            for (int y = 0; y <= 19; y++) {
+                if (board[x][y]>0) {
+                    checkedPlayer = board[x][y];
+                    playerWon=true;
+                    for (int i = 1; i < 5; i++) {
+                        if (board[x+i][y]!=checkedPlayer) {
+                            playerWon=false;
+                        }
+                    }
+                    if (playerWon) {
+                        return checkedPlayer;
+                    }
+                }
+            }
+        }
 
         //VerticalWin
+        for (int x = 0; x <= 19; x++) {
+            for (int y = 0; y <= 15; y++) {
+                if (board[x][y]>0) {
+                    checkedPlayer = board[x][y];
+                    playerWon=true;
+                    for (int i = 1; i < 5; i++) {
+                        if (board[x][y+i]!=checkedPlayer) {
+                            playerWon=false;
+                        }
+                    }
+                    if (playerWon) {
+                        return checkedPlayer;
+                    }
+                }
+            }
+        }
+
         //Diagonal\Win
+        for (int x = 0; x <= 15; x++) {
+            for (int y = 0; y <= 15; y++) {
+                if (board[x][y]>0) {
+                    checkedPlayer = board[x][y];
+                    playerWon=true;
+                    for (int i = 1; i < 5; i++) {
+                        if (board[x+i][y+i]!=checkedPlayer) {
+                            playerWon=false;
+                        }
+                    }
+                    if (playerWon) {
+                        return checkedPlayer;
+                    }
+                }
+            }
+        }
+
         //Diagonal/Win
-        //TODO
-//        return 1; //player 1 won
-//        return 2; //player 2 won
+        for (int x = 4; x <= 19; x++) {
+            for (int y = 0; y <= 15; y++) {
+                if (board[x][y]>0) {
+                    checkedPlayer = board[x][y];
+                    playerWon=true;
+                    for (int i = 1; i < 5; i++) {
+                        if (board[x-i][y+i]!=checkedPlayer) {
+                            playerWon=false;
+                        }
+                    }
+                    if (playerWon) {
+                        return checkedPlayer;
+                    }
+                }
+            }
+        }
         return 0; //no player won
     }
 }
